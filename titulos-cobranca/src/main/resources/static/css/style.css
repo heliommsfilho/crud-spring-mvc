@@ -7,6 +7,11 @@
 	margin-right: 10px;
 }
 
+.panel-heading .btn-link {
+	padding: 0px;
+	border: 0px;
+}
+
 .alert {
 	margin-left: 10px;
 	margin-right: 10px;
