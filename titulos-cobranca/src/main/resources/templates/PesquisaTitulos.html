@@ -32,13 +32,16 @@
 							<tr th:each="titulo : ${titulos}">
 								<td class="text-center" th:text="${titulo.codigo}"></td>
 								<td th:text="${titulo.descricao}"></td>
-								<td class="text-center" th:text="${titulo.dataVencimento}"></td>
-								<td class="text-right" th:text="${titulo.valor}"></td>
-								<td class="text-center" th:text="${titulo.status.descricao}"></td>
+								<td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
+								<td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td>
+								<td class="text-center">
+									<span class="label" th:text="${titulo.status.descricao}"
+											  th:classappend="${titulo.status.label}"></span>
+								</td>
 								<td class="text-center"></td>
 							</tr>
 							<tr>
-								<td class="text-center" colspan="6">Nenhum título foi encontrado.</td>
+								<td class="text-center" colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum título foi encontrado.</td>
 							</tr>
 						</tbody>
 					</table>
