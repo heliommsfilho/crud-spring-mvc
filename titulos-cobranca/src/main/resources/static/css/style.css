@@ -16,3 +16,7 @@
 	margin-left: 10px;
 	margin-right: 10px;
 }
+
+.panel-heading h1 {
+		padding-top: 9px;
+}

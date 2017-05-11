@@ -9,11 +9,13 @@
 	</head>
 	<body>
 		<section layout:fragment="conteudo">
+			<div layout:include="MensagemGeral"></div>
+			
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="clearfix">
 						<h1 class="panel-title pull-left">Pesquisa de títulos</h1>
-						<a class="btn btn-link pull-right" href="/titulos/novo">Novo título</a>
+						<a class="btn btn-primary pull-right" href="/titulos/novo">Novo título</a>
 					</div>
 				</div>
 				<div class="panel-body">
@@ -22,7 +24,7 @@
 							<tr>
 								<th class="text-center col-md-1">#</th>
 								<th>Descricao</th>
-								<th class="text-center col-md-2">Data de vencimento</th>
+								<th class="col-md-2">Data de vencimento</th>
 								<th class="text-right col-md-2">Valor</th>
 								<th class="text-center col-md-2">Status</th>
 								<th class="col-md-1"></th>
@@ -32,13 +34,29 @@
 							<tr th:each="titulo : ${titulos}">
 								<td class="text-center" th:text="${titulo.codigo}"></td>
 								<td th:text="${titulo.descricao}"></td>
-								<td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
+								<td th:text="${{titulo.dataVencimento}}"></td>
 								<td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td>
 								<td class="text-center">
 									<span class="label" th:text="${titulo.status.descricao}"
 											  th:classappend="${titulo.status.label}"></span>
 								</td>
-								<td class="text-center"></td>
+								<td class="text-center">
+									<a class="btn btn-link btn-xs" th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}" 
+									   title="Editar" rel="tooltip" data-placement="top">
+										<span class="glyphicon glyphicon-pencil"></span>
+									</a>
+									<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#confirmarExclusaoModal"
+									   title="Excluir" rel="tooltip" data-placement="top"
+									   th:attr="data-codigo=${titulo.codigo}, data-descricao=${titulo.descricao}">
+										<span class="glyphicon glyphicon-remove"></span>
+									</a>
+									<a class="btn btn-link btn-xs js-atualizar-status" 
+										 th:if="${titulo.status.mostrarBotaoPendente}"
+										 th:href="@{/titulos/{codigo}/receber(codigo=${titulo.codigo})}"
+										 title="Receber" rel="tooltip" data-placement="top">
+										<span class="glyphicon glyphicon-check"></span>
+									</a>
+								</td>
 							</tr>
 							<tr>
 								<td class="text-center" colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum título foi encontrado.</td>
@@ -46,6 +64,9 @@
 						</tbody>
 					</table>
 				</div>
+				
+				<div layout:include="ConfirmarExclusaoModal"></div>
+				
 			</div>
 		</section>
 	</body>
