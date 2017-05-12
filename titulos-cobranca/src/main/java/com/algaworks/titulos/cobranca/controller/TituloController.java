@@ -78,8 +78,9 @@ public class TituloController {
 	}
 	
 	@RequestMapping
-	public ModelAndView pesquisar() {
+	public ModelAndView pesquisar(String descricao) {
 		List<Titulo> todosTitulos = titulos.findAll();
+		
 		ModelAndView mv = new ModelAndView("PesquisaTitulos");
 		mv.addObject("titulos", todosTitulos);
 		
@@ -88,9 +89,8 @@ public class TituloController {
 	
 	@RequestMapping(value="/{codigo}/receber", method = RequestMethod.PUT)
 	public @ResponseBody String receber(@PathVariable Long codigo){
-		tituloService.receber(codigo);
 		
-		return "OK";
+		return tituloService.receber(codigo);
 	}
 	
 	@ModelAttribute("todosStatusTitulo")

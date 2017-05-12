@@ -27,10 +27,12 @@ public class TituloService {
 		titulos.delete(codigo);
 	}
 
-	public void receber(Long codigo) {
+	public String receber(Long codigo) {
 		
 		Titulo titulo = titulos.findOne(codigo);
 		titulo.setStatus(StatusTitulo.RECEBIDO);
 		titulos.save(titulo);
+		
+		return StatusTitulo.RECEBIDO.getDescricao();
 	}
 }
